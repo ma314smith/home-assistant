@@ -1,5 +1,11 @@
-FROM python:3.5
-MAINTAINER Paulus Schoutsen <Paulus@PaulusSchoutsen.nl>
+FROM resin/raspberrypi2-python:3.5
+
+# https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
+# https://github.com/resin-io-projects/armv7hf-debian-qemu.git
+COPY resin-xbuild /usr/bin
+RUN [ "qemu-arm-static", "/bin/sh", "-c", "ln -s resin-xbuild /usr/bin/cross-build-start; ln -s resin-xbuild /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
+
+RUN [ "cross-build-start" ]
 
 VOLUME /config
 
@@ -27,5 +33,7 @@ RUN pip3 install --no-cache-dir -r requirements_all.txt && \
 
 # Copy source
 COPY . .
+
+RUN [ "cross-build-end" ]
 
 CMD [ "python", "-m", "homeassistant", "--config", "/config" ]
