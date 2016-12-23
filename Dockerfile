@@ -1,9 +1,10 @@
-FROM resin/raspberrypi2-python:3.5
+#FROM resin/raspberrypi2-python:3.5
+FROM resin/armv7hf-debian:jessie
 
 # https://resin.io/blog/building-arm-containers-on-any-x86-machine-even-dockerhub/
 # https://github.com/resin-io-projects/armv7hf-debian-qemu.git
 ENV QEMU_EXECVE 1
-#COPY qemu-arm-static /usr/bin/
+COPY qemu-arm-static /usr/bin/
 COPY resin-xbuild /usr/bin/
 RUN [ "qemu-arm-static", "/bin/sh", "-c", "ln -s resin-xbuild /usr/bin/cross-build-start; ln -s resin-xbuild /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
