@@ -5,7 +5,8 @@ FROM resin/armv7hf-debian:jessie
 # https://github.com/resin-io-projects/armv7hf-debian-qemu.git
 ENV QEMU_EXECVE 1
 #COPY qemu-arm-static /usr/bin/
-COPY resin-xbuild /usr/bin/
+#COPY resin-xbuild /usr/bin/
+COPY armv7hf-debian-qemu /usr/bin
 RUN [ "qemu-arm-static", "/bin/sh", "-c", "ln -s resin-xbuild /usr/bin/cross-build-start; ln -s resin-xbuild /usr/bin/cross-build-end; ln /bin/sh /bin/sh.real" ]
 
 RUN [ "cross-build-start" ]
