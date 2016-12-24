@@ -1,4 +1,3 @@
-#FROM resin/raspberrypi2-python:3.5
 FROM ma314smith/raspberrypi2-python-qemu
 
 RUN [ "cross-build-start" ]
@@ -25,12 +24,12 @@ COPY script/build_python_openzwave script/build_python_openzwave
 #  ln -sf /usr/src/app/build/python-openzwave/openzwave/config /usr/local/share/python-openzwave/config
 
 COPY requirements_all.txt requirements_all.txt
-RUN pip3 install --no-cache-dir -r requirements_all.txt && \
-    pip3 install mysqlclient psycopg2 uvloop
+#RUN pip3 install --no-cache-dir -r requirements_all.txt && \
+#    pip3 install mysqlclient psycopg2 uvloop
 
 # Copy source
 COPY . .
 
 RUN [ "cross-build-end" ]
 
-CMD [ "python", "-m", "homeassistant", "--config", "/config" ]
+#CMD [ "python", "-m", "homeassistant", "--config", "/config" ]
